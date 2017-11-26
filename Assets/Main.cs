@@ -32,7 +32,7 @@ public class Main : MonoBehaviour
         // Send any document
         view.sendDocument.onClick.AddListener(() =>
         {
-			// send txt file
+            // send txt file
             var bytes = System.Text.Encoding.UTF8.GetBytes(GetUserInfo());
             telegram.SendFile(bytes, "file.txt", GetUserInfo());
         });
@@ -42,8 +42,12 @@ public class Main : MonoBehaviour
         {
             var screenshotName = "Screenshot.png";
             ScreenCapture.CaptureScreenshot("Assets/" + screenshotName);
-            var bytes = File.ReadAllBytes(Application.dataPath + "/" + screenshotName);
-            telegram.SendPhoto(bytes, screenshotName);
+            try
+            {
+                var bytes = File.ReadAllBytes(Application.dataPath + "/" + screenshotName);
+                telegram.SendPhoto(bytes, screenshotName);
+            }
+            catch { }
         });
 
         // send message
